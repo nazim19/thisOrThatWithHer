@@ -117,45 +117,50 @@ export default function QuestionPage({
           </div>
         )}
 
-        <div className="choices" style={{ position: 'relative' }}>
+        <div className="choices">
           <button
-            className={`choice-btn choice-a
-              ${selected === q.a ? 'chosen' : ''}
-              ${selected && selected !== q.a ? 'unchosen' : ''}
-              ${feedback && p1Answer === q.a ? 'correct-answer' : ''}`}
+            className={[
+              'choice-btn choice-a',
+              selected === q.a ? 'chosen' : '',
+              selected && selected !== q.a && !(feedback && p1Answer === q.a) ? 'unchosen' : '',
+              feedback === 'correct' && selected === q.a ? 'fb-correct' : '',
+              feedback === 'wrong'   && selected === q.a ? 'fb-wrong'   : '',
+              feedback === 'wrong'   && p1Answer === q.a ? 'fb-reveal'  : '',
+            ].join(' ')}
             onClick={() => handleChoice(q.a)}
           >
             <span className="choice-emoji">{q.emoji[0]}</span>
             <span className="choice-label">{q.a}</span>
+            {feedback === 'correct' && selected === q.a && <span className="choice-result">✓</span>}
+            {feedback === 'wrong'   && selected === q.a && <span className="choice-result choice-result--wrong">✗</span>}
+            {feedback === 'wrong'   && p1Answer === q.a && <span className="his-pick-tag">♥ his pick</span>}
           </button>
 
           <div className="or-badge">or</div>
 
           <button
-            className={`choice-btn choice-b
-              ${selected === q.b ? 'chosen' : ''}
-              ${selected && selected !== q.b ? 'unchosen' : ''}
-              ${feedback && p1Answer === q.b ? 'correct-answer' : ''}`}
+            className={[
+              'choice-btn choice-b',
+              selected === q.b ? 'chosen' : '',
+              selected && selected !== q.b && !(feedback && p1Answer === q.b) ? 'unchosen' : '',
+              feedback === 'correct' && selected === q.b ? 'fb-correct' : '',
+              feedback === 'wrong'   && selected === q.b ? 'fb-wrong'   : '',
+              feedback === 'wrong'   && p1Answer === q.b ? 'fb-reveal'  : '',
+            ].join(' ')}
             onClick={() => handleChoice(q.b)}
           >
             <span className="choice-emoji">{q.emoji[1]}</span>
             <span className="choice-label">{q.b}</span>
+            {feedback === 'correct' && selected === q.b && <span className="choice-result">✓</span>}
+            {feedback === 'wrong'   && selected === q.b && <span className="choice-result choice-result--wrong">✗</span>}
+            {feedback === 'wrong'   && p1Answer === q.b && <span className="his-pick-tag">♥ his pick</span>}
           </button>
 
-          {/* Inline feedback overlay */}
           {feedback && (
-            <div className={`feedback-overlay feedback-overlay--${feedback}`}>
-              {feedback === 'correct' ? (
-                <>
-                  <span className="feedback-icon">✓</span>
-                  <span className="feedback-text">You got it!</span>
-                </>
-              ) : (
-                <>
-                  <span className="feedback-icon">✗</span>
-                  <span className="feedback-text">{p1Name} picked <strong>{p1Answer}</strong></span>
-                </>
-              )}
+            <div className={`feedback-pill feedback-pill--${feedback}`}>
+              {feedback === 'correct'
+                ? '✦ You got it!'
+                : `♥ ${p1Name} picked ${p1Answer}`}
             </div>
           )}
         </div>
