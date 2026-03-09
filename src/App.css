@@ -602,10 +602,20 @@ html, body, #root {
 ============================= */
 .score-page {
   background: radial-gradient(ellipse at 50% 0%, #3a0d22 0%, #140a0f 65%);
+  height: 100vh;
+  min-height: unset;
   overflow-y: auto;
+  overflow-x: hidden;
   align-items: flex-start;
   padding: 2.5rem 0 3rem;
+  -webkit-overflow-scrolling: touch;
 }
+
+/* Scrollbar styling */
+.score-page::-webkit-scrollbar          { width: 4px; }
+.score-page::-webkit-scrollbar-track    { background: transparent; }
+.score-page::-webkit-scrollbar-thumb    { background: rgba(232,84,122,0.35); border-radius: 2px; }
+.score-page::-webkit-scrollbar-thumb:hover { background: rgba(232,84,122,0.6); }
 
 .score-content {
   position: relative;
